@@ -12,7 +12,7 @@ class Repository {
 	
 	function getUrl() {
 		$pageURL = 'http';
-		if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+		if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
 		$pageURL .= "://";
 	
 		$path = $_SERVER["REQUEST_URI"];
