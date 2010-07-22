@@ -58,13 +58,15 @@ function executeGit($cmd) {
 	return $output;
 }
 
-function createRepository($repository) {
+function createRepository($repository, $allowAnonymousPushes) {
 	global $config;
 	$repoDirectory = $config["REPOSITORY_ROOT"];
 	$path = "$repoDirectory/$repository.git";
 	
 	if(! file_exists($path)) {
 		executeGit("init --bare $path");
+		chdir($path);
+		executeGit("config http.receivepack true");
 	}
 }
 

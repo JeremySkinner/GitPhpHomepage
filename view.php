@@ -42,7 +42,11 @@
 		<form method="post" action="createrepository.php">
 
 			<input type="text" name="project" />.git<br /><br />
+			<input type="checkbox" id="allowAnonymousPush" value="true" name="allowAnonymousPush" />
+			<label for="allowAnonymousPush">Allow anonymous pushes</label>
+			<br /><br />
 			<input type="submit" value="Create a new repository" class="button" />
+			
 
 		</form>
 		</div>

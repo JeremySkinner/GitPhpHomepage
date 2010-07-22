@@ -164,7 +164,7 @@ ul#repositories li a:hover {
 	margin:10px;
 }
 
-.jqmWindow div.content input {
+.jqmWindow div.content input[type=text] {
 	width:500px
 }
 
