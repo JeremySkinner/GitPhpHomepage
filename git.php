@@ -39,14 +39,27 @@ function getRepositories() {
 	
     while (($file = readdir($dir)) !== false) {
 		if ($file == '.' || $file == '..') continue;
-		array_push($repos, new Repository($file));
+		if (! is_dir("$repoDirectory/$file")) continue;
+		
+		if ($config["CHECK_DIRS_ARE_REPOS"]) {
+		    if (isRepository("$repoDirectory/$file"))
+		 		array_push($repos, new Repository($file));
+		} else {
+			array_push($repos, new Repository($file));
+		}
+		
     }
     closedir($dir);
 	
 	return $repos;
 }
 
-
+function isRepository($path) {
+	if (! is_dir($path)) return false;
+	chdir($path);
+	$result = executeGit("rev-parse --is-inside-work-tree");
+	return $result['returnValue'] == 0;
+}
 
 function executeGit($cmd) {
 	global $config;
@@ -54,8 +67,9 @@ function executeGit($cmd) {
 	
 	$cmd = $gitexe . " " . $cmd;
 	$output = null;
-	exec($cmd, $output);
-	return $output;
+	$returnValue = null;
+	exec($cmd, $output, $returnVal);
+	return array('output' => $output, 'returnValue' => $returnVal);
 }
 
 function createRepository($repository, $allowAnonymousPushes) {
