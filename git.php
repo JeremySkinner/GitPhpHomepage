@@ -79,8 +79,10 @@ function createRepository($repository, $allowAnonymousPushes) {
 	
 	if(! file_exists($path)) {
 		executeGit("init --bare $path");
-		chdir($path);
-		executeGit("config http.receivepack true");
+		if ($allowAnonymousPushes) {
+			chdir($path);
+			executeGit("config http.receivepack true");
+		}
 	}
 }
 
