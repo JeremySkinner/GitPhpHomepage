@@ -8,6 +8,5 @@ $allowAnonymousPushes = isset($_POST["allowAnonymousPushes"]);
 if($repository) {
 	createRepository($repository, $allowAnonymousPushes);
 }
-
 header('location: index.php');
 ?>
